@@ -121,8 +121,8 @@ def llenarCoordenadas(i: int, mesaggeCondition: bool):
 
 def validarFlotante(number: str):
     try:
-        if not number:
-            print("Error")
+        if not number or number == "0":
+            print("Error coordenada")
             exit()
         number = float(number)
         return True
