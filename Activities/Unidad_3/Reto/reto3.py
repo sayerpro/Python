@@ -210,13 +210,13 @@ else:
 
 # Requisitos funcionales
 # RF01: El programa muestra el siguientemenú de opcionesen consolapara el uso del programa
-mesaggeOne = "Cambiar contraseña"
-mesaggeTwo = "Ingresar coordenadas actuales"
-mesaggeThree = "Ubicar zona wifi más cercana"
-mesaggeFour = "Guardar archivo con ubicación cercana"
-mesaggeFive = "Actualizar registros de zonas wifi desde archivo"
-mesaggeSix = "Elegir opción de menú favorita"
-mesaggeSeven = "Cerrar sesión"
+mesaggeOne = "1. Cambiar contraseña"
+mesaggeTwo = "2. Ingresar coordenadas actuales"
+mesaggeThree = "3. Ubicar zona wifi más cercana"
+mesaggeFour = "4. Guardar archivo con ubicación cercana"
+mesaggeFive = "5. Actualizar registros de zonas wifi desde archivo"
+mesaggeSix = "6. Elegir opción de menú favorita"
+mesaggeSeven = "7. Cerrar sesión"
 
 optionOne = mesaggeOne
 optionTwo = mesaggeTwo
@@ -258,20 +258,20 @@ cardinalCoordinateMatriz = [["Digito grupo", "Información clave"],
 while restartMenu:
     if viewMenu:
         if not viewLastOptions:
-            print("1. ", mesaggeOne)
-            print("2. ", mesaggeTwo)
-            print("3. ", mesaggeThree)
-            print("4. ", mesaggeFour)
-            print("5. ", mesaggeFive)
+            print(mesaggeOne)
+            print(mesaggeTwo)
+            print(mesaggeThree)
+            print(mesaggeFour)
+            print(mesaggeFive)
         else:
-            print("1. ", optionOne)
-            print("2. ", optionTwo)
-            print("3. ", optionThree)
-            print("4. ", optionFour)
-            print("5. ", optionFive)
+            print(optionOne)
+            print(optionTwo)
+            print(optionThree)
+            print(optionFour)
+            print(optionFive)
         if viewLastOptions:
-            print("6. ", optionSix)
-            print("7. ", optionSeven)
+            print(optionSix)
+            print(optionSeven)
     if viewLastOptions:
         changeOptions = False
         optionCondition = False
@@ -305,7 +305,7 @@ while restartMenu:
     # RETO 3
     # Requisitos funcionales
     # RF01: El programa permite al usuario actualizar su contraseña.
-    if menuInput == "1":
+    if menuInput == "1" and viewLastOptions:
         confirmPassword = input("Digite la contraseña actual: ")
         if confirmPassword == password:
             optionCondition3 = False
@@ -320,7 +320,7 @@ while restartMenu:
         else:
             print("Error")
             exit()
-    elif menuInput == "2":
+    elif menuInput == "2" and viewLastOptions:
         # RF02: Elprograma permite al usuario ingresar lascoordenadasde los tres sitios que más frecuenta (trabajo, casa, parque).
         option2()
     elif menuInput == "6" or changeOptions:
