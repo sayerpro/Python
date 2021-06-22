@@ -77,29 +77,29 @@ def validateCoordinates(coordinatesList: list):
 
 
 # RF02  El programa dispone de un usuario y una contraseña predefinidos para el inicio de sesión en consola
-# userInput = input("Usuario: ")
-# user = "51745"
-# if userInput != user:
-#     print("Error")
-#     exit()
+userInput = input("Usuario: ")
+user = "51745"
+if userInput != user:
+    print("Error")
+    exit()
 
-# passwordInput = input("Contraseña: ")
-# password = "54715"
-# if passwordInput != password:
-#     print("Error")
-#     exit()
+passwordInput = input("Contraseña: ")
+password = "54715"
+if passwordInput != password:
+    print("Error")
+    exit()
 
-# # RF03 El programa dispone de un captcha de seguridad que confirma que el inicio de sesión corresponde a un usuario.
-# codigoOne = 748
-# codigoTwo = 4*5 % 7 - 5
-# captchaInput = int(input(f"{codigoOne} + {codigoTwo}= "))
-# captcha = codigoOne + codigoTwo
-# if captchaInput != captcha:
-#     print("Error")
-#     exit()
-# else:
-#     # RF04 El programa confirma el ingreso al sistema con un mensaje de éxito en el inicio de sesión
-#     print("Sesión iniciada")
+# RF03 El programa dispone de un captcha de seguridad que confirma que el inicio de sesión corresponde a un usuario.
+codigoOne = 748
+codigoTwo = 4*5 % 7 - 5
+captchaInput = int(input(f"{codigoOne} + {codigoTwo}= "))
+captcha = codigoOne + codigoTwo
+if captchaInput != captcha:
+    print("Error")
+    exit()
+else:
+    # RF04 El programa confirma el ingreso al sistema con un mensaje de éxito en el inicio de sesión
+    print("Sesión iniciada")
 
 # Este código inplementa una funcionde python
 # Interpolación de cadena literal (f"")
