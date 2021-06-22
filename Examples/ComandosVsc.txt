@@ -1,0 +1,14 @@
+Comandos VSC
+Ctrl + D - Seleccionar palabras iguales
+Ctrl + Shif + L - Seleccionar todas las palabras iguales
+Shif + Alt + I - Poner cursor en todas las lineas seleccionadas
+Ctrl + A - Seleccionar todo el contenido
+Alt + Up - Subir una linea
+Alt + Down - Bajar una linea
+Ctrl + K + C - Comentar linea
+Ctrl + K + U - Descomentar linea
+Ctrl + Shif + P - Paleta de Comandos
+Ctrl + L - Limpiar consola
+Se recomienda hacer los siguientes pasos
+File/Preferences/KeyBoard ShortCuts buscar TransForm y Establecer un comando para convertir a mayusculas y otro a minusculas
+Ctrl + Shif + R - Ejecutar archivo en la termina (Python)
