@@ -1,25 +1,122 @@
 import os
 
+coordinatesList = []
+
 
 def option2():
-    coordinatesList = []
-    print("A continuación se le pedira ingresar 3 sets de coordenadas")
-    for i in range(3):
-        print("Set de coordenadas #", i + 1)
-        coordinatesList.append([i]*2)
-        optionCondition4 = False
-        while not optionCondition4:
-            latitude = input("Digite la latitud: ")
-            optionCondition4 = validarFlotante(latitude)
+    if coordinatesList == [] and len(coordinatesList) == 0:
+        print("A continuación se le pedira ingresar 3 sets de coordenadas")
+        for i in range(3):
+            coordinatesList.append([i]*2)
+            llenarCoordenadas(i, True)
 
+        validateCoordinates(coordinatesList, False)
+    else:
+        # RF03: El programa permite al usuario actualizar las coordenadas de los tres sitios más frecuentados.
+        calcularOrientacionCoordenadas(coordinatesList)
         optionCondition5 = False
         while not optionCondition5:
-            length = input("Digite la longitud: ")
-            optionCondition5 = validarFlotante(length)
+            print("Presione 1, 2 o 3 para actualizar la respectiva coordenada")
+            changeDecision = input("Presione 0 para regresar al menú: ")
+            optionCondition5 = changeDecision.isdigit()
+            if not optionCondition5:
+                print("Por favor digite un número entero")
+        if int(changeDecision) in range(*[1, 4]):
+            llenarCoordenadas(int(changeDecision) - 1, False)
+            validateCoordinates(coordinatesList, True)
+        elif changeDecision == "0":
+            pass
+        else:
+            print("Error actualización")
+            exit()
 
-        coordinatesList[i][0] = latitude
-        coordinatesList[i][1] = length
-    result = validateCoordinates(coordinatesList)
+
+def calcularOrientacionCoordenadas(coordinatesList: list):
+    nort = float("0")
+    nortPosition = float("0")
+    south = float("0")
+    southPosition = float("0")
+    east = float("0")
+    eastPosition = float("0")
+    west = float("0")
+    westPosition = float("0")
+    zeroFloat = float("0")
+
+    for a in range(len(coordinatesList)):
+        print(
+            f"Coordenada [latitud, longitud] {a + 1}: {coordinatesList[a]}")
+
+        latitud = float(coordinatesList[a][0])
+        longitud = float(coordinatesList[a][1])
+        count = a + 1
+
+        if nort == zeroFloat:
+            nort = latitud
+            nortPosition = count
+        if south == zeroFloat:
+            south = latitud
+            southPosition = count
+        if east == zeroFloat:
+            east = longitud
+            eastPosition = count
+        if west == zeroFloat:
+            west = longitud
+            westPosition = count
+
+        if a > 0:
+            if latitud >= nort:
+                nort = latitud
+                nortPosition = count
+            if latitud < zeroFloat:
+                if south > zeroFloat:
+                    south = latitud
+                    southPosition = count
+                elif latitud > south:
+                    south = latitud
+                    southPosition = count
+            elif south < zeroFloat:
+                pass
+            elif latitud > south:
+                south = latitud
+                southPosition = count
+
+            if longitud >= east:
+                east = longitud
+                eastPosition = count
+            if longitud < zeroFloat:
+                if west > zeroFloat:
+                    west = longitud
+                    westPosition = count
+                elif longitud < west:
+                    west = longitud
+                    westPosition = count
+            elif west < zeroFloat:
+                pass
+            elif longitud > west:
+                west = longitud
+                westPosition = count
+
+    print("La coordenada #", southPosition, " es la que esta mas al sur")
+    print("La coordenada #", eastPosition, " es la que esta mas al oriente")
+
+
+def llenarCoordenadas(i: int, mesaggeCondition: bool):
+    if mesaggeCondition:
+        print("Set de coordenadas #", i + 1)
+    else:
+        print("Set de coordenadas #", i)
+    optionCondition4 = False
+    while not optionCondition4:
+        latitude = input("Digite la latitud: ")
+        optionCondition4 = validarFlotante(latitude)
+
+    optionCondition5 = False
+    while not optionCondition5:
+        length = input("Digite la longitud: ")
+        optionCondition5 = validarFlotante(length)
+
+    coordinatesList[i][0] = latitude
+    coordinatesList[i][1] = length
 
 
 def validarFlotante(number: str):
@@ -34,7 +131,7 @@ def validarFlotante(number: str):
         return False
 
 
-def validateCoordinates(coordinatesList: list):
+def validateCoordinates(coordinatesList: list, update: bool):
     latitud = False
     longitud = False
     c = 0
@@ -56,7 +153,10 @@ def validateCoordinates(coordinatesList: list):
                         c = b
                         c2 = b2
         if not coordinatesConfirm:
-            print("Error")
+            if update:
+                print("Error coordenada")
+            else:
+                print("Error")
             exit()
             # print(
             #     f"La coordenadas ingresadas en la posición {a} / Latitud: {coordinatesList[a][a2 - 1]} - Longitud: {coordinatesList[a][a2]} no estan dentro del rango de coordenadas disponibles")
@@ -144,6 +244,17 @@ coordinateMatriz = [["Digito grupo", "Municipio", "Latitud", "Longitud"],
                     ["7", "Suaza, Huila", "1.740/1.998", "-75.689/-75.950"],
                     ["8", "Ortega, Tolima", "3.746/4.120", "-75.075/-75.443"],
                     ["9", "Curití, Santander", "6.532/6.690", "-72.872/-73.120"]]
+cardinalCoordinateMatriz = [["Digito grupo", "Información clave"],
+                            ["0", "-Coordenada ubicada más al norte/-Coordenada ubicada más al sur"],
+                            ["1", "-Coordenada ubicada más al norte/-Coordenada ubicada más al oriente"],
+                            ["2", "-Coordenada ubicada más al norte/-Coordenada ubicada más al occidente"],
+                            ["3", "-Coordenada ubicada más al norte/-Coordenada promedio de todos los puntos."],
+                            ["4", "-Coordenada ubicada más al sur/-Coordenada promedio de todos los puntos."],
+                            ["5", "-Coordenada ubicada más al sur/-Coordenada ubicada más al oriente"],
+                            ["6", "-Coordenada ubicada más al sur/-Coordenada ubicada más al occidente"],
+                            ["7", "-Coordenada ubicada más al oriente/-Coordenada ubicada más al occidente"],
+                            ["8", "-Coordenada ubicada más al oriente/-Coordenada promedio de todos los puntos."],
+                            ["9", "-Coordenada ubicada más al occidente/-Coordenada promedio de todos los puntos."]]
 while restartMenu:
     if viewMenu:
         if not viewLastOptions:
