@@ -19,6 +19,7 @@ while restart:
     webWithJoin = "www.google", ".com"
     lines = "Linea1, Linea2, Linea3"
     size = len(name)
+    numero = 645987132.63521654
 
     # SALIDAS
     print("==============================================================================================================================================================")
@@ -90,6 +91,14 @@ while restart:
     print("Partir una cadena en tres partes utilizando un separador (Ejemplo: www.google.com con google)               : ", web.partition("google"))
     print("Partir una cadena en varias partes utilizando un separador (Ejemplo: www.google.com con .) ---------------- : ", web.split("."))
     print("Partir una cadena en lineas (Ejemplo: www.google.com con .)                                                 : ", lines.splitlines())
+    print("Imprimir una determinada cantidad de la cadena despues de indicar un separador parte de la cadena %.2f      : " % numero)
+    print("Imprimir una determinada cantidad de la cadena despues de indicar un separador parte de la cadena %20.2f    : " % numero)
+    print("Duplicar cadena                                                                                             : ", web * 3)
+    print("Tambien poidemos cojer posiciones como si la cadena fuese una lista                                         : ",
+          web[3], web[10])
+    print("{web:^10} {age}". format(web="Al", age="Revéz"))
+    print("{web:<10} {age}". format(web="Al", age="Revéz"))
+    print("{web:>10} {age}". format(web="Al", age="Revéz"))
 
     questionCondition = True
     while questionCondition:
@@ -101,4 +110,4 @@ while restart:
         questionCondition = questionInput != "Si" and questionInput != "No"
         if questionCondition:
             print("Por favor digite una opción valida")
-    print("==============================================================================================================================================================")
+print("==============================================================================================================================================================")

@@ -1,4 +1,4 @@
-# Arreglo
+# LECTURA DE MATRIZ
 # ENTRADAS
 print("===============================================")
 whilevalidation = False
@@ -23,6 +23,18 @@ matriz = []
 for i in range(int(filas)):
     matriz.append([i]*int(columnas))
 
-for item in matriz:
-    for element in item:
+for item in range(len(matriz)):
+    for element in range(len(matriz[item])):
+        whilevalidation3 = False
+        while not whilevalidation3:
+            dato = input(f"Digite el dato de la posicion {item} {element}: ")
+            whilevalidation3 = dato.isdigit()
+            if not whilevalidation3:
+                print("Por favor digite un número entero")
+            else:
+                matriz[item][element] = dato
+
+print("La matriz quedo de las siguiente forma: ")
+for line in matriz:
+    print('|  '.join(map(str, line)), "|")
 print("===============================================")
