@@ -23,11 +23,11 @@ tituloAO = ["        ",
 
 bienvenida = "Bienvenido al sistema"
 seguridad = "¿Desea jugar al juego AHORCADO?"
-seguridad2 = "¿ESTA SEGURO?"
+seguridad2 = "¿ESTA SEGURO Y NO LE A MIEDO?"
 desicion = "Si/No: "
-opcionCategoria = "Digite el Si/No según la opción."
+opcionCategoria = "Mij@ le estan diciendo que ingrese Si o No (Si/No)."
 opcionNumero = "Digite el número según la opción: "
-opcionCategoriaNumero = "Por favor digite un número entero entre 1 y 5"
+opcionCategoriaNumero = "¿No entiende que es un número entero?"
 miedoso = "Hasta nunca miedosin"
 indeciso = "Cuando tengas mas confianza vuelve INDECISO"
 indicacionCategorias = ["====================================", "Seleccione una categoria", "1. Países             ", "2. Frutas             ",
