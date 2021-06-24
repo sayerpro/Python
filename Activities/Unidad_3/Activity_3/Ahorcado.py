@@ -37,13 +37,22 @@ sonidoTitulo = [80, 100]
 sonidoFinTitulo = [4000, 1000]
 
 
-def imprimirMensaje(mensaje: str, entrada: bool, centrar: bool):
-    if entrada:
-        return input(mensaje)
-    elif centrar:
-        print("{web:^70}". format(web=mensaje))
-    else:
-        print(mensaje)
+def finalizarEjecucion(mensaje: str, entrada: bool):
+    imprimirMensaje(mensaje, entrada, False)
+    exit()
+
+
+def emitirSonido(frecuencia: int, duracion: int):
+    winsound.Beep(frecuencia, duracion)
+
+
+def validarEntradaNumerica():
+    numerico = False
+    while not numerico:
+        numerico = imprimirMensaje(
+            opcionNumero, True, False).isdigit()
+        if not numerico:
+            imprimirMensaje(opcionCategoriaNumero, False, False)
 
 
 def validarDesicion():
@@ -63,22 +72,13 @@ def validarDesicion():
     return result
 
 
-def finalizarEjecucion(mensaje: str, entrada: bool):
-    imprimirMensaje(mensaje, entrada, False)
-    exit()
-
-
-def emitirSonido(frecuencia: int, duracion: int):
-    winsound.Beep(frecuencia, duracion)
-
-
-def validarEntradaNumerica():
-    numerico = False
-    while not numerico:
-        numerico = imprimirMensaje(
-            opcionNumero, True, False).isdigit()
-        if not numerico:
-            imprimirMensaje(opcionCategoriaNumero, False, False)
+def imprimirMensaje(mensaje: str, entrada: bool, centrar: bool):
+    if entrada:
+        return input(mensaje)
+    elif centrar:
+        print("{web:^70}". format(web=mensaje))
+    else:
+        print(mensaje)
 
 
 def logicaPrograma():
