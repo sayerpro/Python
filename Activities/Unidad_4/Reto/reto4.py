@@ -1,4 +1,5 @@
 import os
+import math
 
 coordinatesList = []
 
@@ -170,36 +171,128 @@ def validateCoordinates(coordinatesList: list, update: bool):
         c = 0
         c2 = 0
 
+
+def option3():
+    # RF02: El programa permite al usuario encontrar dos (2)zonas wifi más cercanas asu ubicación y saber en cuál de estas hay menos personas conectadas
+    for a in range(len(coordinatesList)):
+        print(
+            f"Coordenada [latitud, longitud] {a + 1}: {coordinatesList[a]}")
+    optionCondition6 = False
+    while not optionCondition6:
+        option = input(
+            "Por favor elija su ubicación actual (1,2 ó 3) para calcular la distancia a los puntos de conexión: ")
+        optionCondition6 = option.isdigit()
+        if not optionCondition6:
+            print("Por favor digite un número entero")
+    if int(option) in range(*[1, 4]):
+        listaDistancia = manejoCoorenadas(int(option))
+        listaDistanciasCercanas = ordenarDistancia(
+            listaDistancia, listaDistancia)
+        optionCondition7 = False
+        while not optionCondition7:
+            option2 = input(
+                "Elija 1 o 2 para recibir indicaciones de llegada: ")
+            optionCondition7 = option2.isdigit()
+            if not optionCondition7:
+                print("Por favor digite un número entero")
+        if int(option2) in range(*[1, 3]):
+            indicaciones(listaDistanciasCercanas, int(option2), int(option))
+        else:
+            print("Error zona wifi")
+            exit()
+    else:
+        print("Error ubicación")
+        exit()
+
+
+def manejoCoorenadas(option: int):
+    listaCoordenadasPredefinidasRadianes = coorenadaPredefinida
+    for a in range(len(listaCoordenadasPredefinidasRadianes)):
+        for b in range(2):
+            listaCoordenadasPredefinidasRadianes[a][b] = math.radians(
+                coorenadaPredefinida[a][b])
+    latitud = math.radians(float(coordinatesList[option - 1][0]))
+    longitud = math.radians(float(coordinatesList[option - 1][1]))
+    listaDistancias = []
+    for i in range(len(coorenadaPredefinida)):
+        latitudPredefinida = coorenadaPredefinida[i][0]
+        longitudPredefinida = coorenadaPredefinida[i][1]
+        latitudDelta = latitudPredefinida - latitud
+        longitudDelta = longitudPredefinida - longitud
+        distancia = (2*radioTierra) * math.asin(math.sqrt((math.sin(latitudDelta/2)**2) +
+                                                          ((math.sin(longitudDelta/2)**2) * (math.cos(latitud)) * (math.cos(latitudPredefinida)))))
+        listaDistancias.append(distancia*1000)
+    return listaDistancias
+
+
+def ordenarDistancia(listaDistancias: list, listaDistancia: list):
+    minimo1 = listaDistancias.index(min(listaDistancias))
+    listaDistancias.pop(minimo1)
+    minimo2 = listaDistancias.index(min(listaDistancias))
+    listaDistancias.pop(minimo2)
+    for a in range(len(coorenadaPredefinida)):
+        for b in range(2):
+            coorenadaPredefinida[a][b] = math.degrees(
+                coorenadaPredefinida[a][b])
+    print("Zonas wifi cercanas con menos usuarios")
+    if coorenadaPredefinida[minimo1][2] < coorenadaPredefinida[minimo2][2]:
+        print(
+            f"La zona wifi 1: ubicada en ['{coorenadaPredefinida[minimo1][0]}' - '{coorenadaPredefinida[minimo1][1]}'] a '{listaDistancia[0]}' metros, tiene en promedio '{coorenadaPredefinida[minimo1][2]}' usuarios")
+        print(
+            f"La zona wifi 2: ubicada en ['{coorenadaPredefinida[minimo2][0]}' - '{coorenadaPredefinida[minimo2][1]}'] a '{listaDistancia[1]}' metros, tiene en promedio '{coorenadaPredefinida[minimo2][2]}' usuarios")
+    else:
+        print(
+            f"La zona wifi 1: ubicada en ['{coorenadaPredefinida[minimo2][0]}' - '{coorenadaPredefinida[minimo2][1]}'] a '{listaDistancia[1]}' metros, tiene en promedio '{coorenadaPredefinida[minimo2][2]}' usuarios")
+        print(
+            f"La zona wifi 2: ubicada en ['{coorenadaPredefinida[minimo1][0]}' - '{coorenadaPredefinida[minimo1][1]}'] a '{listaDistancia[0]}' metros, tiene en promedio '{coorenadaPredefinida[minimo1][2]}' usuarios")
+    return listaDistancias
+
+# RF03: Elprograma indica al usuario en qué dirección está ubicada la coordenada el punto de acceso wifi elegidoy cuál es el tiempo promedio para llegar hasta ese lugar.
+
+
+def indicaciones(listaDistanciasCercanas: list, option: int, actual: int):
+    print(listaDistanciasCercanas)
+    if option == 1:
+        tiempoMoto = listaDistanciasCercanas[0]/19.44
+        tiempoBici = listaDistanciasCercanas[0]/3.33
+    else:
+        tiempoMoto = listaDistanciasCercanas[1]/19.44
+        tiempoBici = listaDistanciasCercanas[1]/3.33
+    print(tiempoMoto)
+    print(tiempoBici)
+    print(coordinatesList[actual - 1])
+
+
 # RETO 1
 # Requisitos funcionales
 # RF01 El programa dispone de un mensaje de bienvenida al sistema previo a la solicitud de las credenciales de acceso.
 # print("Bienvenido al sistema de ubicación para zonas públicas WIFI")
 
 
-# RF02  El programa dispone de un usuario y una contraseña predefinidos para el inicio de sesión en consola
-userInput = input("Usuario: ")
-user = "51745"
-if userInput != user:
-    print("Error")
-    exit()
+# # RF02  El programa dispone de un usuario y una contraseña predefinidos para el inicio de sesión en consola
+# userInput = input("Usuario: ")
+# user = "51745"
+# if userInput != user:
+#     print("Error")
+#     exit()
 
-passwordInput = input("Contraseña: ")
-password = "54715"
-if passwordInput != password:
-    print("Error")
-    exit()
+# passwordInput = input("Contraseña: ")
+# password = "54715"
+# if passwordInput != password:
+#     print("Error")
+#     exit()
 
-# RF03 El programa dispone de un captcha de seguridad que confirma que el inicio de sesión corresponde a un usuario.
-codigoOne = 748
-codigoTwo = 4*5 % 7 - 5
-captchaInput = int(input(f"{codigoOne} + {codigoTwo}= "))
-captcha = codigoOne + codigoTwo
-if captchaInput != captcha:
-    print("Error")
-    exit()
-else:
-    # RF04 El programa confirma el ingreso al sistema con un mensaje de éxito en el inicio de sesión
-    print("Sesión iniciada")
+# # RF03 El programa dispone de un captcha de seguridad que confirma que el inicio de sesión corresponde a un usuario.
+# codigoOne = 748
+# codigoTwo = 4*5 % 7 - 5
+# captchaInput = int(input(f"{codigoOne} + {codigoTwo}= "))
+# captcha = codigoOne + codigoTwo
+# if captchaInput != captcha:
+#     print("Error")
+#     exit()
+# else:
+#     # RF04 El programa confirma el ingreso al sistema con un mensaje de éxito en el inicio de sesión
+#     print("Sesión iniciada")
 
 # Este código inplementa una funcionde python
 # Interpolación de cadena literal (f"")
@@ -207,7 +300,6 @@ else:
 
 # RETO 2
 # Este código inplementa una importación, paquete de python (os)
-
 # Requisitos funcionales
 # RF01: El programa muestra el siguientemenú de opcionesen consolapara el uso del programa
 mesaggeOne = "1. Cambiar contraseña"
@@ -255,6 +347,14 @@ cardinalCoordinateMatriz = [["Digito grupo", "Información clave"],
                             ["7", "-Coordenada ubicada más al oriente/-Coordenada ubicada más al occidente"],
                             ["8", "-Coordenada ubicada más al oriente/-Coordenada promedio de todos los puntos."],
                             ["9", "-Coordenada ubicada más al occidente/-Coordenada promedio de todos los puntos."]]
+# RETO 4
+# Requisitos funcionales
+# RF01: El programa dispone de manera predefinida la ubicación de cuatro zonas wifi con su respectivo promedio de usuarios
+coorenadaPredefinida = [[2.698, -76.680, 63],
+                        [2.724, -76.693, 20],
+                        [2.606, -76.742, 680],
+                        [2.698, -76.690, 15]]
+radioTierra = 6372.795477598
 while restartMenu:
     if viewMenu:
         if not viewLastOptions:
@@ -323,6 +423,11 @@ while restartMenu:
     elif menuInput == "2" and viewLastOptions:
         # RF02: Elprograma permite al usuario ingresar lascoordenadasde los tres sitios que más frecuenta (trabajo, casa, parque).
         option2()
+    elif menuInput == "3" and viewLastOptions:
+        if coordinatesList == []:
+            print("Error sin registro de coordenadas")
+            exit()
+        option3()
     elif menuInput == "6" or changeOptions:
         viewMenu = True
         if rangeNum:
