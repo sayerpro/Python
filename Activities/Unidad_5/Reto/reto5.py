@@ -2,6 +2,9 @@ import os
 import math
 
 coordinatesList = []
+actualWifi = []
+zonaWifi1 = []
+recorrido = []
 
 
 def option2():
@@ -265,6 +268,7 @@ def indicaciones(listaDistanciasCercanas: list, option: int, actual: int, coorde
     longitudOrigen = float(coordinatesList[actual - 1][1])
     latitudDestino = coordenadasPreedefinidas[0]
     longitudDestino = coordenadasPreedefinidas[1]
+    cantidadUsuarios = coordenadasPreedefinidas[2]
     if option == 1:
         tiempoMoto = listaDistanciasCercanas[0]/19.44
         tiempoBici = listaDistanciasCercanas[0]/3.33
@@ -300,7 +304,41 @@ def indicaciones(listaDistanciasCercanas: list, option: int, actual: int, coorde
 
     print("Tiempo en moto: ", round(tiempoMoto, 2), unidadTiempoMoto)
     print("Tiempo en bici: ", round(tiempoBici, 2), unidadTiempoBici)
+    actualWifi.append([latitudOrigen, longitudOrigen])
+    zonaWifi1.append([latitudDestino, longitudDestino, cantidadUsuarios])
+    recorrido.append([listaDistanciasCercanas[0], "Moto", tiempoMoto])
 
+
+def option4():
+    informacion = {
+        "actual": actualWifi,
+        "zonawifi1": zonaWifi1,
+        "recorrido": recorrido}
+    print(informacion)
+    optionCondition9 = False
+    print("¿Está de acuerdo con la información a exportar?")
+    while not optionCondition9:
+        option4 = input(
+            "Presione 1 para confirmar, 0 para regresar al menú principal: ")
+        optionCondition9 = option4.isdigit()
+        if not optionCondition9 or int(option4) in range(*[0*2]):
+            optionCondition9 = False
+            print("Por favor digite el número según la opción")
+    if option4 == "1":
+        print("Exportando archivo")
+        exit()
+
+
+def option5():
+    archivo = open("almacenDatos.txt", "r")
+    archivo.close
+    return archivo.readlines()
+
+
+coordenadasPreedefinidas = [[2.698, -76.680, 63],
+                            [2.724, -76.693, 20],
+                            [2.606, -76.742, 680],
+                            [2.698, -76.680, 64]]
 # RETO 1
 # Requisitos funcionales
 # RF01 El programa dispone de un mensaje de bienvenida al sistema previo a la solicitud de las credenciales de acceso.
@@ -388,10 +426,6 @@ cardinalCoordinateMatriz = [["Digito grupo", "Información clave"],
 # RETO 4
 # Requisitos funcionales
 # RF01: El programa dispone de manera predefinida la ubicación de cuatro zonas wifi con su respectivo promedio de usuarios
-coordenadasPreedefinidas = [[2.698, -76.680, 63],
-                            [2.724, -76.693, 20],
-                            [2.606, -76.742, 680],
-                            [2.698, -76.680, 64]]
 radioTierra = 6372.795477598
 while restartMenu:
     if viewMenu:
@@ -466,6 +500,28 @@ while restartMenu:
             print("Error sin registro de coordenadas")
             exit()
         option3()
+    elif menuInput == "4" and viewLastOptions:
+        # RETO 5
+        # Requisitos funcionales
+        # RF01: El programa preparalos resultados de las zonas de conexión wifi más cercanasen un diccionario de datos para ser exportado a un archivo.
+        if coordinatesList == [] or recorrido == [] or zonaWifi1 == [] or actualWifi == []:
+            print("Error de alistamiento")
+            exit()
+        option4()
+    elif menuInput == "5" and viewLastOptions:
+        # RF02: El programa utiliza un archivo externopara actualizar la información de las 4 zonas conexión wifi en el municipio.
+        coordenadasPreedefinidas = option5()
+        optionCondition10 = False
+        while not optionCondition10:
+            option5 = input(
+                "Datos de coordenadas para zonas wifi actualizados, presione 0 para regresar al menú principal: ")
+            optionCondition10 = option5.isdigit()
+            if not optionCondition10 or int(option5) == "0":
+                optionCondition10 = False
+                print("Por favor digite el número según la opción")
+        if option4 == "1":
+            print("Exportando archivo")
+            exit()
     elif menuInput == "6" or changeOptions:
         viewMenu = True
         if rangeNum:
